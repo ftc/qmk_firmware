@@ -22,11 +22,22 @@
 //
 enum custom_keycodes {
     QMKBEST = PLOOPY_SAFE_RANGE,
-    UI_CPY,
+    UI_CPY_SCROLL,
     UI_PST
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    static uint16_t scroll_timer;
+    keyrecord_t record_press = {
+            .event = {
+                .pressed = 1,
+            },
+        };
+    keyrecord_t record_un_press = {
+            .event = {
+                .pressed = 0,
+            },
+        };
     switch (keycode) {
         case QMKBEST:
             if (record->event.pressed) {
@@ -36,9 +47,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // when keycode QMKBEST is released
             }
             break;
-        case UI_CPY:
+        case UI_CPY_SCROLL:
             if(record->event.pressed) {
-                SEND_STRING(SS_LGUI("c"));
+                scroll_timer = timer_read();
+                process_record_kb(DRAG_SCROLL, &record_press);
+                //register_code16(DRAG_SCROLL);
+                //SEND_STRING("press");
+            }else {
+                //unregister_code16(DRAG_SCROLL);
+                process_record_kb(DRAG_SCROLL, &record_un_press);
+                if(timer_elapsed(scroll_timer) < 200){
+                    SEND_STRING(SS_LGUI("c"));
+                }
+                //SEND_STRING("release");
             }
             break;
         case UI_PST:
@@ -52,6 +73,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT( /* Base */
         KC_BTN1, KC_BTN3, KC_BTN2,
-          DRAG_SCROLL, UI_PST
+          UI_CPY_SCROLL, UI_PST
     ),
 };
