@@ -17,9 +17,6 @@
  */
 #include QMK_KEYBOARD_H
 #include "trackball.h"
-#define PLOOPY_DRAGSCROLL_MULTIPLIER 0.05
-#define PLOOPY_DRAGSCROLL_MOMENTARY 
-#define PLOOPY_DRAGSCROLL_INVERT
 
 // safe range starts at `PLOOPY_SAFE_RANGE` instead.
 //

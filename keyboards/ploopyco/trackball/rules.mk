@@ -1,4 +1,5 @@
 # MCU name
+MOUSEKEY_ENABLE = yes
 MCU = atmega32u4
 
 # Processor frequency
