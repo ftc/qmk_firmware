@@ -30,11 +30,13 @@ enum custom_keycodes {
     UI_DPI_DOWN
 };
 
-//void process_mouise_user(report_mouse_t mouse_report, int16_t x, int16_t y){
-//    char buffer[20];
-//    sprintf(buffer,"%i ", (int)(mouse_report->x));
-//    SEND_STRING(buffer);
-//}
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report){
+   //char buffer[20];
+   //sprintf(buffer,"%i ", (int)(mouse_report->x));
+   //if(mouse_report.x != 0)
+   //    SEND_STRING("a");
+   return mouse_report;
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint16_t scroll_timer;
